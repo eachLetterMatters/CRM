@@ -1,0 +1,38 @@
+{
+  "name": "odkryj-pomorze-crm",
+  "version": "1.0.0",
+  "description": "Client Relationsip Management App",
+  "main": "./out/main/index.js",
+  "author": "Konrad Zabagonski",
+  "homepage": "https://github.com/eachlettermatters",
+  "scripts": {
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:win": "npm run build && electron-builder --win --config",
+    "build:mac": "npm run build && electron-builder --mac --config",
+    "build:linux": "npm run build && electron-builder --linux --config"
+  },
+  "dependencies": {
+    "@electron-toolkit/preload": "^2.0.0",
+    "@electron-toolkit/utils": "^2.0.0",
+    "knex": "^3.1.0",
+    "sqlite3": "5.1.6",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@iconify/vue": "^4.1.1",
+    "@vitejs/plugin-vue": "^4.3.1",
+    "electron": "^25.6.0",
+    "electron-builder": "^24.6.3",
+    "electron-vite": "^1.0.27",
+    "vite": "^4.4.9",
+    "vue": "^3.3.4"
+  },
+  "build": {
+    "extraResources": [
+      "./database/**"
+    ]
+  }
+}

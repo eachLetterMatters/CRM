@@ -1,0 +1,46 @@
+@font-face{
+  font-family: Poppins;
+  src:url(Poppins-Regular.ttf);
+}
+
+:root {
+  --primary-color: #3B82F6;
+  --theme-color: #007aff;
+
+  --dark-white: #e5e7eb;
+  --light-background: #b5d4e6;
+  --dark-background-1: #036ba3;
+  --dark-background-2: #0283c6;
+
+  --icon-color: #054061;
+  --light-blue: #38bdf8;
+  --dark-blue: #0ea5e9;
+  --light-mint: #99f6e3;
+  --dark-mint: #5eead5;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Poppins;
+  font-size: 15px;
+  color: #054061;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  width: 100%;
+}
+
+.view-container {
+  margin: auto;
+  height: 87%;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(var(--light-background), white);
+}
