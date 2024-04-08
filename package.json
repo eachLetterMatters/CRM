@@ -4,6 +4,7 @@
   "description": "Client Relationsip Management App",
   "main": "./out/main/index.js",
   "author": "Konrad Zabagonski",
+  "icon": "icon.png",
   "homepage": "https://github.com/eachlettermatters",
   "scripts": {
     "start": "electron-vite preview",

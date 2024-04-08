@@ -1,54 +1,61 @@
 
-
-
-
-
-// import {db} from "./dbmanager"
-
-// const fs = require('fs');
-// const path = require('path');
-
-// export const dbgetNames = () => {
-//     return new Promise((resolve, reject) => {
-//     fs.readdir(path.join(__dirname, "../../resources"), (err, files) => {
-//         console.log(__dirname)
-//         if (err) {
-//           console.error('Error reading directory:', err);
-//           return;
-//         }
-//         let empty = []
-//         console.log(typeof(files))
-//         files.forEach(file => {
-//             empty.push(file)
-//           console.log(file);
-//         });
-//         resolve(empty)
-//       });
-//     });
-// }
-
 const path = require('path');
 
 const knex = require('knex')({
-    client: 'sqlite3',
-    connection: {
-      // TO JEST SCIEZKA DO BAZY DANYCH NA DEVELOPMENT
-      filename: path.join(__dirname, '../../database/mysqlite.db'),
-      // A TO SCIEZKA DO BAZ DANYCH NA PRODUKCJI XDDDDDD!!!!
-      // filename: path.join(__dirname, '../../../database/mysqlite.db'),
-    },
-  });
+  client: 'sqlite3',
+  connection: {
+    // TO JEST SCIEZKA DO BAZY DANYCH NA DEVELOPMENT
+    filename: path.join(__dirname, '../../database/mysqlite.db'),
+    // A TO SCIEZKA DO BAZ DANYCH NA PRODUKCJI XDDDDDD!!!!
+    // filename: path.join(__dirname, '../../../database/mysqlite.db'),
+  },
+});
 
 export const dbgetNames = () => {
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    knex.select().from('klienci')
+      .then(rows => {
+        console.log(rows);
+        resolve(rows);
+      })
+      .catch(error => {
+        reject(error);
+      });
 
-        knex.select().from('test')
-        .then(rows => {
-          resolve(rows.map(r => r.name));
-        })
-        .catch(error => {
-          reject(error);
-        });
-
-    });
+  });
 };
+
+// Define data to insert
+const testItem = {
+  name : "Nowa firma",
+  phone_number : "789123456",
+  www : "www.google.com",
+  fb : "www.facebook.com",
+  description : null,
+  is_active : 1,
+  is_commercial : 1,
+};
+
+export const dbAddClient = () => {
+  // Insert new item into the database
+  knex('klienci')
+    .insert(testItem)
+    .then(() => {
+      console.log('New item inserted successfully');
+    })
+    .catch(error => {
+      console.error('Error inserting new item:', error);
+    });
+}
+
+export const dbRemoveClient = (id) => {
+  knex('klienci')
+    .where({ id: id })
+    .del()
+    .then(() => {
+      console.log('Item deleted successfully');
+    })
+    .catch(error => {
+      console.error('Error deleting item:', error);
+    });
+}

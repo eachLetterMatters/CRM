@@ -46,9 +46,11 @@ export default {
 header {
   display: flex;
   justify-content: center;
+  height: 12%;
 }
 
 nav {
+  height: 100%;
   width: 100%;
   background-color: white;
   position: relative;
@@ -62,7 +64,7 @@ nav {
 }
 
 .logo {
-  margin: 15px;
+  /* margin: 15px; */
   height: 50px;
 }
 
@@ -122,5 +124,6 @@ li a.router-link-exact-active {
 .icon {
   height: 20px;
   margin-right: 5px;
+  filter: invert(17%) sepia(32%) saturate(3234%) hue-rotate(176deg) brightness(94%) contrast(96%);
 }
 </style>
