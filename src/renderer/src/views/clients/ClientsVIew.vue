@@ -86,14 +86,14 @@ export default {
 .floating-container:hover .floating-add{
   transform: translatey(3px);
   transition: all 0.3s;
-  background: var(--dark-blue);
+  /* background: var(--dark-blue); */
 }
 
 .floating-add{
   position:absolute;
   width: 65px;
   height:65px;
-  background: var(--light-blue);
+  background: var(--theme-color);
   bottom: 0;
   border-radius: 50%;
   /* left: 0; */

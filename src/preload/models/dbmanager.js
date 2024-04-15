@@ -5,9 +5,9 @@ const knex = require('knex')({
   client: 'sqlite3',
   connection: {
     // TO JEST SCIEZKA DO BAZY DANYCH NA DEVELOPMENT
-    filename: path.join(__dirname, '../../database/mysqlite.db'),
+    // filename: path.join(__dirname, '../../database/mysqlite.db'),
     // A TO SCIEZKA DO BAZ DANYCH NA PRODUKCJI XDDDDDD!!!!
-    // filename: path.join(__dirname, '../../../database/mysqlite.db'),
+    filename: path.join(__dirname, '../../../database/mysqlite.db'),
   },
 });
 
@@ -15,7 +15,7 @@ export const dbgetNames = () => {
   return new Promise((resolve, reject) => {
     knex.select().from('klienci')
       .then(rows => {
-        console.log(rows);
+        // console.log(rows);
         resolve(rows);
       })
       .catch(error => {
@@ -27,13 +27,13 @@ export const dbgetNames = () => {
 
 // Define data to insert
 const testItem = {
-  name : "Nowa firma",
-  phone_number : "789123456",
-  www : "www.google.com",
-  fb : "www.facebook.com",
-  description : null,
-  is_active : 1,
-  is_commercial : 1,
+  name: "Nowa firma",
+  phone_number: "789123456",
+  www: "www.google.com",
+  fb: "www.facebook.com",
+  description: null,
+  is_active: 1,
+  is_commercial: 1,
 };
 
 export const dbAddClient = () => {
@@ -46,6 +46,22 @@ export const dbAddClient = () => {
     .catch(error => {
       console.error('Error inserting new item:', error);
     });
+}
+
+export const dbGetClient = (id) => {
+  return new Promise((resolve, reject) => {
+    knex('klienci')
+      .where({ id: id })
+      .first()
+      .then(entity => {
+        resolve(entity);
+        // console.log(entity);
+      })
+      .catch(error => {
+        reject(entity);
+        // console.error('Error getting entity:', error);
+      });
+  });
 }
 
 export const dbRemoveClient = (id) => {
