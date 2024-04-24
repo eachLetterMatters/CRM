@@ -20,20 +20,8 @@
       </div>
       <div class="bottom">
         <!-- Miejsce na liste osób -->
-        <swiper
-          :slides-per-view="3"
-          :space-between="20"
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
-          style="padding: 10px; height: 100%"
-        >
-          <swiper-slide class="klient">Osoba 1</swiper-slide>
-          <swiper-slide class="klient">Osoba 2</swiper-slide>
-          <swiper-slide class="klient">Osoba 3</swiper-slide>
-          <swiper-slide class="klient">Osoba 4</swiper-slide>
-          <swiper-slide class="klient">Osoba 5</swiper-slide>
-          <swiper-slide class="klient">Osoba 6</swiper-slide>
-        </swiper>
+        <PersonList/>
+
       </div>
     </div>
     <div class="right">Miejsce na historie i akcje</div>
@@ -41,18 +29,14 @@
 </template>
 
 <script>
+import PersonList from './PersonList.vue';
 // import { shell} from 'electron'
 // const { shell } = require('electron')
-// Import Swiper Vue.js components
-import { Swiper, SwiperSlide } from "swiper/vue";
 
-// Import Swiper styles
-import "swiper/css";
 
 export default {
   components: {
-    Swiper,
-    SwiperSlide,
+    PersonList,
   },
   data() {
     return {
@@ -150,4 +134,5 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 </style>
