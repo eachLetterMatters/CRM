@@ -1,38 +1,21 @@
 import { contextBridge, shell } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-import {dbgetNames, dbAddClient, dbRemoveClient, dbGetClient} from "./models/dbmanager";
-// const testMgr = require("../models/testmanager");
-
-const getNames = () => {
-    // console.log("Preload getNames")
-    return dbgetNames();
-}
-
-const addClient = () => {
-  return dbAddClient();
-}
-
-const removeClient = (id) => {
-  return dbRemoveClient(id);
-}
-
+import {dbgetNames, dbAddClient, dbRemoveClient, dbGetClient, dbAddPerson, dbGetPersons} from "./models/dbmanager";
 
 const openInBrowser = (link) => {
     return shell.openExternal('https://' + link);
 }
 
-const getClient = (id) => {
-  return dbGetClient(id);
-}
-
 // Custom APIs for renderer
 const api = {
-  getNames: getNames,
-  addClient: addClient,
-  removeClient: removeClient,
+  getNames: dbgetNames,
+  addClient: dbAddClient,
+  removeClient: dbRemoveClient,
   openInBrowser: openInBrowser,
-  getClient: getClient
+  getClient: dbGetClient,
+  addPerson: dbAddPerson,
+  getPersons: dbGetPersons
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

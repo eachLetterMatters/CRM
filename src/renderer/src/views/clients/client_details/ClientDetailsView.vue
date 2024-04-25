@@ -20,7 +20,7 @@
       </div>
       <div class="bottom">
         <!-- Miejsce na liste osób -->
-        <PersonList/>
+        <PersonList :clientId="client.id"/>
 
       </div>
     </div>
@@ -80,7 +80,7 @@ export default {
 
 .right {
   display: flex;
-  background: #ffffff33;
+  /* background: #ffffff33; */
   width: 48%;
   align-items: center;
   justify-content: center;
@@ -98,7 +98,7 @@ export default {
   align-items: center;
   justify-content: center;
   border: 3px solid var(--dark-white);
-  background: #ffffff33;
+  /* background: #ffffff33; */
   border-top-left-radius: 35px;
   color: var(--dark-background-1);
   margin: 1% 1% 1% 1%;
@@ -116,7 +116,7 @@ export default {
   justify-content: center;
 
   border: 3px solid var(--dark-white);
-  background: #ffffff44;
+  /* background: #ffffff44; */
   border-bottom-left-radius: 35px;
   color: var(--dark-background-1);
   margin: 1% 1% 1% 1%;
@@ -126,13 +126,17 @@ export default {
   font-size: 48px;
 }
 
-.klient {
-  /* background: red; */
+/* .klient {
+  background: red;
   height: 100%;
   display: flex;
   background: var(--dark-white);
   align-items: center;
   justify-content: center;
+} */
+.icon {
+  filter: invert(17%) sepia(32%) saturate(3234%) hue-rotate(176deg)
+    brightness(94%) contrast(96%);
 }
 
 </style>

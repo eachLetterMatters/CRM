@@ -84,7 +84,7 @@ export default {
 }
 
 .floating-container:hover .floating-add{
-  transform: translatey(3px);
+  transform: translatey(-3px);
   transition: all 0.3s;
   /* background: var(--dark-blue); */
 }
