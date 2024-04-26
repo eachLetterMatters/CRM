@@ -2,26 +2,49 @@
   <div class="view-container">
     <div class="left">
       <div class="top">
-        <h1 class="title-name">{{ client.name }}</h1>
-        <p>
-          <img class="icon" src="../../../assets/icons/ic--phone.svg" />
-          {{ client.phone_number }}
-        </p>
-        <p>
-          <img class="icon" src="../../../assets/icons/ic--www.svg" />
-          {{ client.www }}
-        </p>
-        <p>
-          <img class="icon" src="../../../assets/icons/ic--facebook.svg" />
-          {{ client.fb }}
-        </p>
 
-        <button @click="removeClient(client.id)">testowe usuń</button>
+        <!-- ========  CLIENT DATA ========= -->
+
+        <h1 class="title-name" :contenteditable="edit" id="client_name">
+          {{ client.name }}
+        </h1>
+        <div style="display: flex;">
+          <img class="icon" src="../../../assets/icons/ic--phone.svg" />
+          <p :contenteditable="edit" id="client_phone_number">
+            {{ client.phone_number }}
+          </p>
+        </div>
+        <div style="display: flex;">
+            <img class="icon" src="../../../assets/icons/ic--www.svg" />
+          <p :contenteditable="edit" id="client_www">
+            {{ client.www }}
+          </p>
+        </div>
+        <div style="display: flex;">
+            <img class="icon" src="../../../assets/icons/ic--facebook.svg" />
+          <p :contenteditable="edit" id="client_fb">
+            {{ client.fb }}
+          </p>
+        </div>
+
+        <!-- ========   EDIT BUTTONS ========= -->
+
+        <div class="edit-button" @click="toggleEdit" :class="{ 'edit-active': edit }">
+          <img class="icon" src="../../../assets/icons/ic--edit.svg" style="height:25px;"/>
+        </div>
+
+        <div class="ok-button" v-if="edit" @click="updateClient">
+          <img class="icon" src="../../../assets/icons/ic--ok.svg" style="height:25px;"/>
+        </div>
+
+        <div class="trash-button" v-if="edit">
+          <img class="icon" src="../../../assets/icons/ic--trash.svg" style="height:25px;"/>
+        </div>
+
+
       </div>
       <div class="bottom">
-        <!-- Miejsce na liste osób -->
-        <PersonList :clientId="client.id"/>
-
+        <PersonList :clientId="client.id" />
       </div>
     </div>
     <div class="right">Miejsce na historie i akcje</div>
@@ -29,10 +52,9 @@
 </template>
 
 <script>
-import PersonList from './PersonList.vue';
+import PersonList from "./PersonList.vue";
 // import { shell} from 'electron'
 // const { shell } = require('electron')
-
 
 export default {
   components: {
@@ -41,6 +63,7 @@ export default {
   data() {
     return {
       client: {},
+      edit: false,
     };
   },
   methods: {
@@ -48,6 +71,25 @@ export default {
     //     window.api.openInBrowser(link);
     //     // shell.openExternal('https://' + link);
     // },
+    toggleEdit(){
+      this.edit = !this.edit;
+    },
+    updateClient(){
+      const name = document.getElementById('client_name').innerText;
+      const phone_number = document.getElementById('client_phone_number').innerText;
+      const www = document.getElementById('client_www').innerText;
+      const fb = document.getElementById('client_fb').innerText;
+      // console.log(name + " " + phone_number + " " + www + " " + fb);
+      // console.log(this.client)
+      const updated_client = {
+        "name" : name,
+        "phone_number" : phone_number,
+        "www" : www,
+        "fb" : fb
+      }
+      window.api.updateClient(this.client.id, updated_client);
+      this.edit = false;
+    },
     removeClient(id) {
       window.api.removeClient(id);
       this.$router.push({ name: "clients" });
@@ -58,7 +100,7 @@ export default {
     window.api
       .getClient(this.$route.params.id)
       .then((client) => {
-        console.log(client);
+        // console.log(client);
         this.client = client;
       })
       .catch((err) => {
@@ -105,6 +147,8 @@ export default {
   /*  */
 
   flex-direction: column;
+
+  position: relative;
 }
 
 .bottom {
@@ -139,4 +183,80 @@ export default {
     brightness(94%) contrast(96%);
 }
 
+.edit-button {
+  position: absolute;
+  /* background: var(--dark-white); */
+  border-radius: 50%;
+  /* z-index: 100; */
+  top: 15px;
+  left: 15px;
+  height: 40px;
+  width:40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--dark-white);
+}
+
+.edit-button:hover{
+  background: var(--theme-color);
+  transition: 1s;
+  cursor:pointer;
+}
+
+.ok-button {
+  position: absolute;
+  background: var(--light-mint);
+  border-radius: 50%;
+  /* z-index: 100; */
+  top: 15px;
+  left: 70px;
+  height: 40px;
+  width:40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--dark-white);
+}
+.edit-active{
+  background: var(--light-blue);
+}
+
+.ok-button:hover {
+  background: var(--dark-mint);
+  transition: 1s;
+  cursor:pointer;
+}
+
+.trash-button {
+  position: absolute;
+  /* background: var(--light-red); */
+  border-radius: 50%;
+  /* z-index: 100; */
+  top: 15px;
+  right: 15px;
+  height: 40px;
+  width:40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--dark-white);
+}
+
+.trash-button:hover {
+  background: var(--dark-red);
+  transition: 1s;
+  cursor:pointer;
+}
+
+[contenteditable] {
+    /* border: 1px solid gray; Set a default border color */
+    /* padding: 8px; */
+    outline: none; /* Remove the default focus outline */
+}
+
+[contenteditable]:focus {
+    border: 1px solid blue; /* Change border color when focused */
+    /* border-radius: 50%; */
+}
 </style>

@@ -64,6 +64,18 @@ export const dbGetClient = (id) => {
   });
 }
 
+export const dbUpdateClient = (id, data) => {
+  knex('klienci')
+    .where({ id: id })
+    .update(data)
+    .then(() => {
+      console.log('Item updated successfully');
+    })
+    .catch(error => {
+      console.error('Error updating item:', error);
+    });
+}
+
 export const dbRemoveClient = (id) => {
   knex('klienci')
     .where({ id: id })

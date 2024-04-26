@@ -21,10 +21,8 @@
         </div>
       </div>
       <div class="person" @click="addPerson">
-      <div class="add-button">
-        +
+        <div class="add-button">+</div>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -55,12 +53,19 @@ export default {
         });
     },
   },
+  watch: {
+    clientId: function (newVal, oldVal) {
+      // watch it
+      //   console.log("Prop changed: ", newVal, " | was: ", oldVal);
+      this.getPersons();
+    },
+  },
   mounted() {
     // this.getPersons();
   },
   beforeUpdate() {
-    console.log("Before update is called");
-    this.getPersons();
+    // console.log("Before update is called");
+    // this.getPersons();
   },
 };
 </script>
@@ -111,20 +116,20 @@ export default {
     brightness(94%) contrast(96%);
 }
 
-.add-button{
+.add-button {
   width: 65px;
-  height:65px;
+  height: 65px;
   background: var(--dark-white);
   border-radius: 50%;
   color: white;
   line-height: 65px;
   text-align: center;
-  font-size:center;
+  font-size: center;
   font-size: 23px;
   z-index: 100;
   cursor: pointer;
 }
-.add-button:hover{
+.add-button:hover {
   background: var(--theme-color);
   transition: 1s;
 }
