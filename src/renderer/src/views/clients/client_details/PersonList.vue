@@ -126,7 +126,7 @@ export default {
   text-align: center;
   font-size: center;
   font-size: 23px;
-  z-index: 100;
+  z-index: 99;
   cursor: pointer;
 }
 .add-button:hover {

@@ -37,13 +37,14 @@
           <img class="icon" src="../../../assets/icons/ic--ok.svg" style="height:25px;"/>
         </div>
 
-        <div class="trash-button" v-if="edit">
+        <div class="trash-button" v-if="edit" @click="removeClient">
           <img class="icon" src="../../../assets/icons/ic--trash.svg" style="height:25px;"/>
         </div>
 
 
       </div>
       <div class="bottom">
+        <!-- ========   PERSON LIST  ========= -->
         <PersonList :clientId="client.id" />
       </div>
     </div>
@@ -53,6 +54,7 @@
 
 <script>
 import PersonList from "./PersonList.vue";
+import { store } from "../../..//store/store";
 // import { shell} from 'electron'
 // const { shell } = require('electron')
 
@@ -90,9 +92,16 @@ export default {
       window.api.updateClient(this.client.id, updated_client);
       this.edit = false;
     },
+
     removeClient(id) {
-      window.api.removeClient(id);
-      this.$router.push({ name: "clients" });
+
+      confirm("Test")
+      // store.emitter.emit("showDialog", { a: "test" });
+
+
+
+      // window.api.removeClient(id);
+      // this.$router.push({ name: "clients" });
     },
   },
   mounted() {

@@ -1,7 +1,19 @@
 <template>
   <li>
-    <p>{{ client.name }}</p>
-    <div style="display: flex">
+    <div class="name-container">
+      <p>{{ client.name }}</p>
+    </div>
+
+    <div class="link-container">
+      <div @click="openInBrowser(client.www)" style="display: flex;">
+        <img class="icon" src="../../assets/icons/ic--www.svg" />
+      </div>
+      <div @click="openInBrowser(client.fb)" style="display: flex;">
+        <img class="icon" src="../../assets/icons/ic--facebook.svg" />
+      </div>
+    </div>
+
+    <div class="phone-container">
       <img
         class="icon"
         src="../../assets/icons/ic--phone.svg"
@@ -9,21 +21,14 @@
       />
       <p>{{ client.phone_number }}</p>
     </div>
-    <div style="display: flex">
-      <div @click="openInBrowser(client.www)">
-        <img class="icon" src="../../assets/icons/ic--www.svg" />
-      </div>
-      <div @click="openInBrowser(client.fb)">
-        <img class="icon" src="../../assets/icons/ic--facebook.svg" />
-      </div>
-    </div>
-    <!-- <div @click="removeClient(client.id)"> -->
-    <div @click="openClientDetails()">
+
+    <div class="details-container" @click="openClientDetails()">
       <img
         class="icon"
         src="../../assets/icons/iconamoon--arrow-right-2-light.svg"
       />
     </div>
+    
   </li>
 </template>
 
@@ -41,9 +46,12 @@ export default {
     removeClient(id) {
       window.api.removeClient(id);
     },
-    openClientDetails(){
-        this.$router.push({ name: 'clientdetails', params: {id: this.client.id} });
-    }
+    openClientDetails() {
+      this.$router.push({
+        name: "clientdetails",
+        params: { id: this.client.id },
+      });
+    },
   },
 };
 </script>
@@ -77,5 +85,37 @@ li:hover {
   /* https://isotropic.co/tool/hex-color-to-css-filter/ */
   filter: invert(17%) sepia(32%) saturate(3234%) hue-rotate(176deg)
     brightness(94%) contrast(96%);
+    /* background: pink; */
+}
+
+.name-container {
+  padding-left: 5%;
+  flex: 6;
+  /* background-color: blue; */
+}
+
+.link-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: yellow; */
+}
+
+.phone-container {
+  flex: 3;
+  display: flex;
+    align-items: center;
+  /* justify-content: center; */
+  /* background-color: green; */
+}
+
+.details-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: red; */
+  /* height: 100%; */
 }
 </style>
