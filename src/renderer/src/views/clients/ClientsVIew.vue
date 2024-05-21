@@ -60,7 +60,7 @@ export default {
     // },
   },
   mounted() {
-    window.api.getNames()
+    window.api.getClients()
       .then((names) => {
         this.allClients = names;
       })

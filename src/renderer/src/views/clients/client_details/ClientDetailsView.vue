@@ -2,26 +2,25 @@
   <div class="view-container">
     <div class="left">
       <div class="top">
-
         <!-- ========  CLIENT DATA ========= -->
 
         <h1 class="title-name" :contenteditable="edit" id="client_name">
           {{ client.name }}
         </h1>
-        <div style="display: flex;">
+        <div style="display: flex">
           <img class="icon" src="../../../assets/icons/ic--phone.svg" />
           <p :contenteditable="edit" id="client_phone_number">
             {{ client.phone_number }}
           </p>
         </div>
-        <div style="display: flex;">
-            <img class="icon" src="../../../assets/icons/ic--www.svg" />
+        <div style="display: flex">
+          <img class="icon" src="../../../assets/icons/ic--www.svg" />
           <p :contenteditable="edit" id="client_www">
             {{ client.www }}
           </p>
         </div>
-        <div style="display: flex;">
-            <img class="icon" src="../../../assets/icons/ic--facebook.svg" />
+        <div style="display: flex">
+          <img class="icon" src="../../../assets/icons/ic--facebook.svg" />
           <p :contenteditable="edit" id="client_fb">
             {{ client.fb }}
           </p>
@@ -29,23 +28,39 @@
 
         <!-- ========   EDIT BUTTONS ========= -->
 
-        <div class="edit-button" @click="toggleEdit" :class="{ 'edit-active': edit }">
-          <img class="icon" src="../../../assets/icons/ic--edit.svg" style="height:25px;"/>
+        <div
+          class="edit-button"
+          @click="toggleEdit"
+          :class="{ 'edit-active': edit }"
+        >
+          <img
+            class="icon"
+            src="../../../assets/icons/ic--edit.svg"
+            style="height: 25px"
+          />
         </div>
 
         <div class="ok-button" v-if="edit" @click="updateClient">
-          <img class="icon" src="../../../assets/icons/ic--ok.svg" style="height:25px;"/>
+          <img
+            class="icon"
+            src="../../../assets/icons/ic--ok.svg"
+            style="height: 25px"
+          />
         </div>
 
-        <div class="trash-button" v-if="edit" @click="removeClient">
-          <img class="icon" src="../../../assets/icons/ic--trash.svg" style="height:25px;"/>
+        <div class="trash-button" v-if="edit" @click="removeClient(client.id)">
+          <img
+            class="icon"
+            src="../../../assets/icons/ic--trash.svg"
+            style="height: 25px"
+          />
         </div>
 
-
+        <ConfirmDialog :class="$style.myinput" />
       </div>
       <div class="bottom">
         <!-- ========   PERSON LIST  ========= -->
-        <PersonList :clientId="client.id" />
+        <PersonList :clientId="client.id" :allowEdit="edit"/>
       </div>
     </div>
     <div class="right">Miejsce na historie i akcje</div>
@@ -73,32 +88,46 @@ export default {
     //     window.api.openInBrowser(link);
     //     // shell.openExternal('https://' + link);
     // },
-    toggleEdit(){
+    toggleEdit() {
       this.edit = !this.edit;
     },
-    updateClient(){
-      const name = document.getElementById('client_name').innerText;
-      const phone_number = document.getElementById('client_phone_number').innerText;
-      const www = document.getElementById('client_www').innerText;
-      const fb = document.getElementById('client_fb').innerText;
+    updateClient() {
+      const name = document.getElementById("client_name").innerText;
+      const phone_number = document.getElementById(
+        "client_phone_number"
+      ).innerText;
+      const www = document.getElementById("client_www").innerText;
+      const fb = document.getElementById("client_fb").innerText;
       // console.log(name + " " + phone_number + " " + www + " " + fb);
       // console.log(this.client)
       const updated_client = {
-        "name" : name,
-        "phone_number" : phone_number,
-        "www" : www,
-        "fb" : fb
-      }
+        name: name,
+        phone_number: phone_number,
+        www: www,
+        fb: fb,
+      };
       window.api.updateClient(this.client.id, updated_client);
       this.edit = false;
     },
 
     removeClient(id) {
-
-      confirm("Test")
+      this.$confirm.require({
+        message: "Czy na pewno chcesz usunąć te dane?",
+        header: "Potwierdzenie",
+        acceptLabel: "Tak",
+        rejectLabel: "Nie",
+        // icon: "pi pi-exclamation-triangle",
+        accept: () => {
+          // Action to perform on confirmation
+          window.api.removeClient(id);
+          this.$router.push({ name: "clients" });
+        },
+        reject: () => {
+          console.log("Not Deleted");
+        },
+      });
+      // confirm("Test")
       // store.emitter.emit("showDialog", { a: "test" });
-
-
 
       // window.api.removeClient(id);
       // this.$router.push({ name: "clients" });
@@ -200,17 +229,17 @@ export default {
   top: 15px;
   left: 15px;
   height: 40px;
-  width:40px;
+  width: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 3px solid var(--dark-white);
 }
 
-.edit-button:hover{
+.edit-button:hover {
   background: var(--theme-color);
   transition: 1s;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .ok-button {
@@ -221,20 +250,20 @@ export default {
   top: 15px;
   left: 70px;
   height: 40px;
-  width:40px;
+  width: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 3px solid var(--dark-white);
 }
-.edit-active{
+.edit-active {
   background: var(--light-blue);
 }
 
 .ok-button:hover {
   background: var(--dark-mint);
   transition: 1s;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .trash-button {
@@ -245,7 +274,7 @@ export default {
   top: 15px;
   right: 15px;
   height: 40px;
-  width:40px;
+  width: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -255,17 +284,45 @@ export default {
 .trash-button:hover {
   background: var(--dark-red);
   transition: 1s;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 [contenteditable] {
-    /* border: 1px solid gray; Set a default border color */
-    /* padding: 8px; */
-    outline: none; /* Remove the default focus outline */
+  /* border: 1px solid gray; Set a default border color */
+  /* padding: 8px; */
+  outline: none; /* Remove the default focus outline */
 }
 
 [contenteditable]:focus {
-    border: 1px solid blue; /* Change border color when focused */
-    /* border-radius: 50%; */
+  border: 1px solid blue; /* Change border color when focused */
+  /* border-radius: 50%; */
 }
+
+/* .p-confirmdialog-acceptbutton {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important; 
+  color: white !important; 
+} */
+
+</style>
+
+<style module>
+.myinput {
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.myinput button {
+  /* background-color: #28a745; */
+  margin: 10px 5px 10px 5px;
+  padding: 5px;
+}
+
+/* .myinput button.p-confirmdialog-acceptbutton{
+  background-color: #28a745 !important;
+  border-color: #28a745 !important; 
+  color: white !important; 
+} */
 </style>

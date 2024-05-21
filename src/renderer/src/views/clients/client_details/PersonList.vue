@@ -19,6 +19,16 @@
           <img class="icon" src="../../../assets/icons/ic--email.svg" />
           <p>{{ person.email }}</p>
         </div>
+
+        <!-- EDIT BUTTONS -->
+        <div class="trash-button" v-if="allowEdit" @click="removePerson(person.id)">
+          <img
+            class="icon"
+            src="../../../assets/icons/ic--trash.svg"
+            style="height: 25px"
+          />
+        </div>
+
       </div>
       <div class="person" @click="addPerson">
         <div class="add-button">+</div>
@@ -29,7 +39,7 @@
 
 <script>
 export default {
-  props: ["clientId"],
+  props: ["clientId", "allowEdit"],
   data() {
     return {
       persons: [],
@@ -51,6 +61,31 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    removePerson(id) {
+      this.$confirm.require({
+        message: "Czy na pewno chcesz usunąć te dane?",
+        header: "Potwierdzenie",
+        acceptLabel: "Tak",
+        rejectLabel: "Nie",
+        // icon: "pi pi-exclamation-triangle",
+        accept: () => {
+          // Action to perform on confirmation
+          // window.api.removeClient(id);
+          // this.$router.push({ name: "clients" });
+          console.log("Deleting person with id: " + id);
+          window.api.removePerson(id);
+          this.getPersons();
+        },
+        reject: () => {
+          console.log("Not Deleted");
+        },
+      });
+      // confirm("Test")
+      // store.emitter.emit("showDialog", { a: "test" });
+
+      // window.api.removeClient(id);
+      // this.$router.push({ name: "clients" });
     },
   },
   watch: {
@@ -105,6 +140,7 @@ export default {
   /* padding: 8px;  */
   border-radius: 35px;
   color: var(--dark-background-1);
+  position: relative;
 }
 
 .gallery::-webkit-scrollbar {
@@ -133,4 +169,26 @@ export default {
   background: var(--theme-color);
   transition: 1s;
 }
+
+.trash-button {
+  position: absolute;
+  /* background: var(--light-red); */
+  border-radius: 50%;
+  /* z-index: 100; */
+  top: 15px;
+  right: 50% - 20px;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--dark-white);
+}
+
+.trash-button:hover {
+  background: var(--dark-red);
+  transition: 1s;
+  cursor: pointer;
+}
+
 </style>

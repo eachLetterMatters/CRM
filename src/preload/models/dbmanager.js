@@ -11,19 +11,9 @@ const knex = require('knex')({
   },
 });
 
-export const dbgetNames = () => {
-  return new Promise((resolve, reject) => {
-    knex.select().from('klienci')
-      .then(rows => {
-        // console.log(rows);
-        resolve(rows);
-      })
-      .catch(error => {
-        reject(error);
-      });
-
-  });
-};
+//
+// ============ CLIENTS TABLE OPERATIONS ================
+//
 
 // Define data to insert
 const testItem = {
@@ -38,7 +28,7 @@ const testItem = {
 
 export const dbAddClient = () => {
   // Insert new item into the database
-  knex('klienci')
+  knex('clients')
     .insert(testItem)
     .then(() => {
       console.log('New item inserted successfully');
@@ -48,14 +38,28 @@ export const dbAddClient = () => {
     });
 }
 
+export const dbGetClients = () => {
+  return new Promise((resolve, reject) => {
+    knex.select().from('clients')
+      .then(rows => {
+        // console.log(rows);
+        resolve(rows);
+      })
+      .catch(error => {
+        reject(error);
+      });
+
+  });
+};
+
 export const dbGetClient = (id) => {
   return new Promise((resolve, reject) => {
-    knex('klienci')
+    knex('clients')
       .where({ id: id })
       .first()
       .then(entity => {
         resolve(entity);
-        // console.log(entity);
+        console.log(entity);
       })
       .catch(error => {
         reject(entity);
@@ -65,7 +69,7 @@ export const dbGetClient = (id) => {
 }
 
 export const dbUpdateClient = (id, data) => {
-  knex('klienci')
+  knex('clients')
     .where({ id: id })
     .update(data)
     .then(() => {
@@ -77,7 +81,7 @@ export const dbUpdateClient = (id, data) => {
 }
 
 export const dbRemoveClient = (id) => {
-  knex('klienci')
+  knex('clients')
     .where({ id: id })
     .del()
     .then(() => {
@@ -88,8 +92,10 @@ export const dbRemoveClient = (id) => {
     });
 }
 
+//
+// ============ PERSONS TABLE OPERATIONS ================
+//
 
-// ============ PERSONS HANDLING ================
 const testPerson = {
   name: "Nowa firma",
   phone_number: "789123456",
@@ -131,4 +137,16 @@ export const dbGetPersons = (clientId) => {
         reject(error);
       });
   });
+}
+
+export const dbRemovePerson = (id) => {
+  knex('persons')
+    .where({ id: id })
+    .del()
+    .then(() => {
+      console.log('Item deleted successfully');
+    })
+    .catch(error => {
+      console.error('Error deleting item:', error);
+    });
 }

@@ -1,7 +1,7 @@
 import { contextBridge, shell } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-import {dbgetNames, dbAddClient, dbUpdateClient, dbRemoveClient, dbGetClient, dbAddPerson, dbGetPersons} from "./models/dbmanager";
+import {dbAddClient, dbUpdateClient, dbRemoveClient, dbGetClient, dbGetClients, dbAddPerson, dbGetPersons, dbRemovePerson} from "./models/dbmanager";
 
 const openInBrowser = (link) => {
     return shell.openExternal('https://' + link);
@@ -9,13 +9,14 @@ const openInBrowser = (link) => {
 
 // Custom APIs for renderer
 const api = {
-  getNames: dbgetNames,
   addClient: dbAddClient,
   removeClient: dbRemoveClient,
   openInBrowser: openInBrowser,
   getClient: dbGetClient,
+  getClients: dbGetClients,
   addPerson: dbAddPerson,
   getPersons: dbGetPersons,
+  removePerson: dbRemovePerson,
   updateClient: dbUpdateClient
 }
 
