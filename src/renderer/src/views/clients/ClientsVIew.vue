@@ -1,4 +1,8 @@
 <template>
+  <AddClientForm
+    v-if="showAddForm"
+    @closeForm="toggleAddForm"
+  />
   <div class="view-container">
     <div class="task-list" style="width:100%;">
       <ul style="width: 100%; height:100%; display: flex; flex-direction: column;">
@@ -11,12 +15,13 @@
     </div>
 
     <div class="floating-container">
-      <div class="floating-add" @click="addClient()">+</div>
+      <div class="floating-add" @click="toggleAddForm()">+</div>
     </div>
   </div>
 </template>
 
 <script>
+import AddClientForm from './AddClientForm.vue';
 import ClientItem from "./ClientItem.vue";
 
 export default {
@@ -24,25 +29,31 @@ export default {
     return {
       message: "Hello, Cients!",
       allClients: [],
+      showAddForm: false,
     };
   },
   components: {
     ClientItem,
+    AddClientForm
   },
   methods: {
     changeMessage() {
       this.message = "Hello, World!";
     },
-    addClient(){
-      window.api.addClient();
-      window.api.getNames()
-      .then((names) => {
-        this.allClients = names;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
+    // addClient(){
+    //   // window.api.addClient();
+    //   // window.api.getNames()
+    //   // .then((names) => {
+    //   //   this.allClients = names;
+    //   // })
+    //   // .catch((err) => {
+    //   //   console.log(err);
+    //   // });
+    // },
+    toggleAddForm(){
+      this.showAddForm = !this.showAddForm;
+      // this.getPersons();
+    },
   },
   computed: {
     // allClients() {

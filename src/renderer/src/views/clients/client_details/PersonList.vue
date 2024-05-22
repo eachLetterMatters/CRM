@@ -1,6 +1,13 @@
 <template>
+  <AddPersonForm
+    v-if="showAddForm"
+    @closeForm="toggleAddForm"
+    v-bind:clientId="clientId"
+  />
+
   <div class="gallery">
     <div class="list-container">
+      <!-- DIV PER EACH PERSON -->
       <div v-for="(person, index) in persons" :key="index" class="person">
         <img
           class="icon"
@@ -20,17 +27,21 @@
           <p>{{ person.email }}</p>
         </div>
 
-        <!-- EDIT BUTTONS -->
-        <div class="trash-button" v-if="allowEdit" @click="removePerson(person.id)">
+        <!-- DELETE BUTTON -->
+        <div
+          class="trash-button"
+          v-if="allowEdit"
+          @click="removePerson(person.id)"
+        >
           <img
             class="icon"
             src="../../../assets/icons/ic--trash.svg"
             style="height: 25px"
           />
         </div>
-
       </div>
-      <div class="person" @click="addPerson">
+      <!-- ADD A NEW PERSON BUTTON -->
+      <div class="person" @click="toggleAddForm">
         <div class="add-button">+</div>
       </div>
     </div>
@@ -38,19 +49,27 @@
 </template>
 
 <script>
+import AddPersonForm from "./AddPersonForm.vue";
+
 export default {
+  components: { AddPersonForm },
   props: ["clientId", "allowEdit"],
   data() {
     return {
       persons: [],
+      showAddForm: false,
     };
   },
   methods: {
-    addPerson() {
-      console.log("Person Added");
-      window.api.addPerson(this.clientId);
+    toggleAddForm(){
+      this.showAddForm = !this.showAddForm;
       this.getPersons();
     },
+    // addPerson() {
+    //   // console.log("Person Added");
+    //   // window.api.addPerson(this.clientId);
+    //   // this.getPersons();
+    // },
     getPersons() {
       // console.log("Searching for id: " +  this.clientId)
       window.api
@@ -190,5 +209,4 @@ export default {
   transition: 1s;
   cursor: pointer;
 }
-
 </style>

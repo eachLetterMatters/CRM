@@ -59,7 +59,7 @@ export const dbGetClient = (id) => {
       .first()
       .then(entity => {
         resolve(entity);
-        console.log(entity);
+        // console.log(entity);
       })
       .catch(error => {
         reject(entity);
@@ -96,26 +96,18 @@ export const dbRemoveClient = (id) => {
 // ============ PERSONS TABLE OPERATIONS ================
 //
 
-const testPerson = {
-  name: "Nowa firma",
-  phone_number: "789123456",
-  www: "www.google.com",
-  fb: "www.facebook.com",
-  description: null,
-  is_active: 1,
-  is_commercial: 1,
-};
+// const testPerson = {
+//   client_id: null,
+//   name: "Janek",
+//   surname: "Nowak",
+//   phone_number: "1111",
+//   email: "test@gmail.com"
+// };
 
-export const dbAddPerson = (clientId) => {
+export const dbAddPerson = (new_person) => {
   // Insert new item into the database
   knex('persons')
-    .insert({
-      client_id: clientId,
-      name: "Jan",
-      surname: "Kowalski",
-      phone_number: "123123213",
-      email: "test@wp.pl"
-    })
+    .insert(new_person)
     .then(() => {
       console.log('New item inserted successfully');
     })
