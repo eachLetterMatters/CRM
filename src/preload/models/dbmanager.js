@@ -142,3 +142,49 @@ export const dbRemovePerson = (id) => {
       console.error('Error deleting item:', error);
     });
 }
+
+//
+// ============ QUICKNOTES OPERATIONS ================
+//
+
+const testQuickNote = {
+  content: "Testowy tekst na taką dosyć średnią długość"
+};
+
+export const dbAddNote = (new_note) => {
+  // Insert new item into the database
+  knex('quicknotes')
+    .insert(testQuickNote)
+    .then(() => {
+      console.log('New item inserted successfully');
+    })
+    .catch(error => {
+      console.error('Error inserting new item:', error);
+    });
+}
+
+export const dbGetNotes = (clientId) => {
+  return new Promise((resolve, reject) => {
+    knex('quicknotes')
+    .select('*') 
+    .then(rows => {
+        // console.log(rows);
+        resolve(rows);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+export const dbRemoveNote = (id) => {
+  knex('quicknotes')
+    .where({ id: id })
+    .del()
+    .then(() => {
+      console.log('Item deleted successfully');
+    })
+    .catch(error => {
+      console.error('Error deleting item:', error);
+    });
+}
