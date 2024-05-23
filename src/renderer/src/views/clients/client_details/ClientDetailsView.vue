@@ -26,6 +26,33 @@
           </p>
         </div>
 
+        <div style="display:flex; align-items:center;">
+          <div v-if="edit" style="display:flex; margin-right: 10px;">
+            <InputSwitch v-model="client.is_active"/>
+          </div>
+          <div v-if="client.is_active" style="display: flex;">
+            <img class="icon" src="../../../assets/icons/bulb-on.svg" />
+            <p>aktywny</p>
+          </div>
+          <div v-else style="display: flex">
+            <img class="icon" src="../../../assets/icons/bulb-off.svg" />
+            <p>nieaktywny</p>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center;">
+          <div v-if="edit" style="display:flex; margin-right: 10px;">
+            <InputSwitch v-model="client.is_commercial"/>
+          </div>
+          <div v-if="client.is_commercial" style="display: flex;">
+            <img class="icon" src="../../../assets/icons/company.svg" />
+            <p>firma</p>
+          </div>
+          <div v-else style="display: flex">
+            <img class="icon" src="../../../assets/icons/government.svg" />
+            <p>instytucja</p>
+          </div>
+        </div>
         <!-- ========   EDIT BUTTONS ========= -->
 
         <div
@@ -60,7 +87,7 @@
       </div>
       <div class="bottom">
         <!-- ========   PERSON LIST  ========= -->
-        <PersonList :clientId="client.id" :allowEdit="edit"/>
+        <PersonList :clientId="client.id" :allowEdit="edit" />
       </div>
     </div>
     <div class="right">Miejsce na historie i akcje</div>
@@ -72,10 +99,12 @@ import PersonList from "./PersonList.vue";
 import { store } from "../../..//store/store";
 // import { shell} from 'electron'
 // const { shell } = require('electron')
+import InputSwitch from 'primevue/inputswitch';
 
 export default {
   components: {
     PersonList,
+    InputSwitch,
   },
   data() {
     return {
@@ -105,6 +134,8 @@ export default {
         phone_number: phone_number,
         www: www,
         fb: fb,
+        is_active: this.client.is_active,
+        is_commercial: this.client.is_commercial
       };
       window.api.updateClient(this.client.id, updated_client);
       this.edit = false;
@@ -303,7 +334,6 @@ export default {
   border-color: #28a745 !important; 
   color: white !important; 
 } */
-
 </style>
 
 <style module>

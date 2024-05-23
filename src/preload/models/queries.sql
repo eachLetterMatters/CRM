@@ -6,8 +6,7 @@ CREATE TABLE clients (
 	fb TEXT,
 	is_active INTEGER DEFAULT (1) NOT NULL,
 	is_commercial INTEGER DEFAULT (1) NOT NULL,
-	description TEXT,
-	CONSTRAINT CLIENTS_PK PRIMARY KEY (id)
+	description TEXT
 );
 
 CREATE TABLE persons (
@@ -18,4 +17,9 @@ CREATE TABLE persons (
 	email TEXT,
 	client_id INTEGER,
 	FOREIGN KEY (client_id) REFERENCES clients(id)
+);
+
+CREATE TABLE quicknotes (
+	id INTEGER NOT NULL,
+	text TEXT NOT NULL
 );

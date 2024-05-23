@@ -1,9 +1,7 @@
 <template>
   <div class="view-container">
-    <div class="left">
-      <div class="top">Miejsce na szybkie notatki</div>
-      <div class="bottom">Miejsce na akcje do wykonania</div>
-    </div>
+      <div class="left">Miejsce na akcje do wykonania</div>
+      <div class="right">Miejsce na szybkie notatki</div>
   </div>
 </template>
 
@@ -25,39 +23,37 @@ export default {
 <style scoped>
 .left {
   display: flex;
-  /* background: yellow; */
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.top {
-  display: flex;
-  /* background: green; */
-  height: 48%;
-  width: 98%;
-  align-items: center;
-  justify-content: center;
-  border: 3px solid var(--dark-white);
-  background: #ffffff33;
-  border-radius: 35px;
-  color: var(--dark-background-1);
-  margin: 1% 1% 1% 1%;
-}
-
-.bottom {
-  display: flex;
   /* background: blue; */
-  height: 48%;
-  width: 98%;
+  height: calc(100% - 32px);
+  /* width: 50% - 24px; */
+  width: calc(76% - 24px);
   align-items: center;
   justify-content: center;
 
   border: 3px solid var(--dark-white);
   background: #ffffff44;
+  /* background: red; */
   border-radius: 35px;
   color: var(--dark-background-1);
-  margin: 1% 1% 1% 1%;
+  margin: 16px 8px 16px 16px;
+  /* margin: 16px 0px 16px 0px; */
 }
+
+.right {
+  display: flex;
+  /* background: green; */
+  height: calc(100% - 32px);
+  /* width: 50% - 24px; */
+  width: calc(24% - 24px);
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--dark-white);
+  background: #ffffff33;
+  /* background: yellow; */
+  border-radius: 35px;
+  color: var(--dark-background-1);
+  margin: 16px 16px 16px 8px;
+  /* margin: 16px 0px 16px 0px; */
+}
+
 </style>

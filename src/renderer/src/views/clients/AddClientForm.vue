@@ -7,16 +7,23 @@
             </div>
 
             <div>
-            <input class="text-input" type="text" name="name" placeholder="imie" v-model="newClient.name"><br><br>
+            <input class="text-input" type="text" name="name" placeholder="imie" v-model="newClient.name">
             </div>
             <div>
-            <input class="text-input" type="text" name="surname" placeholder="nazwisko" v-model="newClient.surname"><br><br>
+            <input class="text-input" type="text" name="phone_number" placeholder="numer telefonu" v-model="newClient.phone_number">
             </div>
             <div>
-            <input class="text-input" type="text" name="phone_number" placeholder="numer telefonu" v-model="newClient.phone_number"><br><br>
+            <input class="text-input" type="text" name="www" placeholder="www" v-model="newClient.www">
             </div>
             <div>
-            <input class="text-input" type="text" name="email" placeholder="email" v-model="newClient.email"><br><br>
+                <input class="text-input" type="text" name="fb" placeholder="fb" v-model="newClient.fb">
+            </div>
+            <div>
+                <input class="text-input" type="text" name="description" placeholder="opis" v-model="newClient.description">
+            </div>
+            <div>
+                <label for="isActive">czy aktywny?</label>
+                <InputSwitch v-model="newClient.is_active" inputId="isActive" />
             </div>
             <div>
             <input class="button" type="submit" :value="'Dodaj'" />
@@ -29,6 +36,7 @@
 </template>
 
 <script>
+import InputSwitch from 'primevue/inputswitch';
 
 export default {
     data() {
@@ -36,13 +44,17 @@ export default {
             errorMsg: null,
             newClient: {
                 name: null,
-                surname: null,
                 phone_number: null,
-                email: null
+                www: '',
+                fb: '',
+                is_active: false,
+                is_commercial: false,
+                description: null,
             },
         }
     },
-    components: {  
+    components: {
+        InputSwitch,
     },
     // props: ["clientId"],
     methods: {

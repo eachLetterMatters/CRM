@@ -7,16 +7,16 @@
             </div>
 
             <div>
-            <input class="text-input" type="text" name="name" placeholder="imie" v-model="newPerson.name"><br><br>
+            <input class="text-input" type="text" name="name" placeholder="imie" v-model="newPerson.name">
             </div>
             <div>
-            <input class="text-input" type="text" name="surname" placeholder="nazwisko" v-model="newPerson.surname"><br><br>
+            <input class="text-input" type="text" name="surname" placeholder="nazwisko" v-model="newPerson.surname">
             </div>
             <div>
-            <input class="text-input" type="text" name="phone_number" placeholder="numer telefonu" v-model="newPerson.phone_number"><br><br>
+            <input class="text-input" type="text" name="phone_number" placeholder="numer telefonu" v-model="newPerson.phone_number">
             </div>
             <div>
-            <input class="text-input" type="text" name="email" placeholder="email" v-model="newPerson.email"><br><br>
+            <input class="text-input" type="text" name="email" placeholder="email" v-model="newPerson.email">
             </div>
             <div>
             <input class="button" type="submit" :value="'Dodaj'" />

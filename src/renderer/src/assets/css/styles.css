@@ -46,6 +46,6 @@ body,
   display: flex;
   justify-content: center;
   background: linear-gradient(var(--light-background), white);
-  padding: 10px;
+  /* padding: 10px; */
   /* background: red; */
 }

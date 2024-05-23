@@ -1,6 +1,12 @@
 <template>
-  <li>
+  <li :class="{ 'client-inactive' : !client.is_active }">
     <div class="name-container">
+      <div v-if="client.is_commercial" style="display: flex;">
+        <img class="icon" src="../../assets/icons/company.svg" />
+      </div>
+      <div v-else style="display: flex;">
+        <img class="icon" src="../../assets/icons/government.svg" />
+      </div>
       <p>{{ client.name }}</p>
     </div>
 
@@ -73,6 +79,11 @@ li {
   color: var(--dark-background-1);
 }
 
+.client-inactive{
+  background: #00000011;
+
+}
+
 li:hover {
   /* background: #f5f5f5; */
   /* background: transparent; */
@@ -89,7 +100,8 @@ li:hover {
 }
 
 .name-container {
-  padding-left: 5%;
+  display: flex;
+  padding-left: 30px;
   flex: 6;
   /* background-color: blue; */
 }
