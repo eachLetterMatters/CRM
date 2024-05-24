@@ -87,10 +87,18 @@
       </div>
       <div class="bottom">
         <!-- ========   PERSON LIST  ========= -->
-        <PersonList :clientId="client.id" :allowEdit="edit" />
+        <PersonList :clientId="client.id" :allowEdit="edit"/>
       </div>
     </div>
-    <div class="right">Miejsce na historie i akcje</div>
+    <!-- HISTORY AND ACTIONS SECTION -->
+    <div class="right">
+      <div style="display: flex; height:50%; width:100%; border-bottom: 3px solid var(--dark-white);">
+        <Chart type="line" :data="chartData" :options="chartOptions" style="width:100%; height:100%" />
+      </div>
+      <div style="display: flex; height:50%; width:100%; justify-content:center; align-items: center;">
+        Miejsce na akcje
+      </div>
+    </div>
   </div>
 </template>
 
@@ -100,16 +108,57 @@ import { store } from "../../..//store/store";
 // import { shell} from 'electron'
 // const { shell } = require('electron')
 import InputSwitch from 'primevue/inputswitch';
+import Chart from 'primevue/chart';
 
 export default {
   components: {
     PersonList,
     InputSwitch,
+    Chart,
   },
   data() {
     return {
       client: {},
       edit: false,
+      chartData:{
+        labels: ['2008', '2010', '2014', '2019', '2020', '2021', '2022'],
+        datasets: [
+            {
+                label: 'Ocena',
+                fill: true,
+                borderColor: '#5eead5',
+                yAxisID: 'y',
+                tension: 0.4,
+                data: [3, 2, 1, 1, 2, 4, 6]
+            }
+        ]
+      },
+      chartOptions:{
+        scale: {
+          ticks: {
+            precision: 0
+          }
+        },
+        plugins: {
+            legend: {
+                display: false // Disable the legend
+            },
+            title: {
+                display: true,
+                text: 'Historia współpracy', // Set the title text
+                font: {
+                    size: 20, // Set the font size
+                    color: '#054061',
+                    family: 'Poppins',
+                },
+                padding: {
+                    top: 10,
+                    bottom: 10
+                }
+            }
+        }
+      }
+
     };
   },
   methods: {
@@ -191,6 +240,7 @@ export default {
 
 .right {
   display: flex;
+  flex-direction: column;
   /* background: #ffffff33; */
   width: 48%;
   align-items: center;

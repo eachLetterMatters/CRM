@@ -16,20 +16,20 @@ const knex = require('knex')({
 //
 
 // Define data to insert
-const testItem = {
-  name: "Nowa firma",
-  phone_number: "789123456",
-  www: "www.google.com",
-  fb: "www.facebook.com",
-  description: null,
-  is_active: 1,
-  is_commercial: 1,
-};
+// const testItem = {
+//   name: "Nowa firma",
+//   phone_number: "789123456",
+//   www: "www.google.com",
+//   fb: "www.facebook.com",
+//   description: null,
+//   is_active: 1,
+//   is_commercial: 1,
+// };
 
-export const dbAddClient = () => {
+export const dbAddClient = (newClient) => {
   // Insert new item into the database
   knex('clients')
-    .insert(testItem)
+    .insert(newClient)
     .then(() => {
       console.log('New item inserted successfully');
     })
@@ -104,10 +104,10 @@ export const dbRemoveClient = (id) => {
 //   email: "test@gmail.com"
 // };
 
-export const dbAddPerson = (new_person) => {
+export const dbAddPerson = (newPerson) => {
   // Insert new item into the database
   knex('persons')
-    .insert(new_person)
+    .insert(newPerson)
     .then(() => {
       console.log('New item inserted successfully');
     })

@@ -7,7 +7,7 @@
             </div>
 
             <div>
-            <input class="text-input" type="text" name="name" placeholder="imie" v-model="newClient.name">
+            <input class="text-input" type="text" name="name" placeholder="nazwa" v-model="newClient.name">
             </div>
             <div>
             <input class="text-input" type="text" name="phone_number" placeholder="numer telefonu" v-model="newClient.phone_number">
@@ -21,10 +21,14 @@
             <div>
                 <input class="text-input" type="text" name="description" placeholder="opis" v-model="newClient.description">
             </div>
-            <div>
-                <label for="isActive">czy aktywny?</label>
+            <div style="display:flex; align-items:center; justify-content:center;">
+                <label for="isActive" style="margin-right: 10px;">czy aktywny?</label>
                 <InputSwitch v-model="newClient.is_active" inputId="isActive" />
             </div>
+            <!-- <div style="display:flex; align-items:center; justify-content:center;">
+                <label for="isActive" style="margin-right: 10px;">czy prywatny?</label>
+                <InputSwitch v-model="newClient.is_commercial" inputId="isActive" />
+            </div> -->
             <div>
             <input class="button" type="submit" :value="'Dodaj'" />
             </div>
@@ -47,9 +51,9 @@ export default {
                 phone_number: null,
                 www: '',
                 fb: '',
-                is_active: false,
-                is_commercial: false,
-                description: null,
+                is_active: true,
+                is_commercial: true,
+                description: '',
             },
         }
     },
@@ -63,8 +67,8 @@ export default {
         },
         async addClient(e) {
 
-            if (this.newClient.name == null || this.newClient.surname == null  || this.newClient.phone_number == null || this.newClient.email == null){
-                this.errorMsg = "Wypełnij wszystkie pola";
+            if (this.newClient.name == null || this.newClient.phone_number == null ){
+                this.errorMsg = "Wypełnij wymagane pola";
                 setTimeout(() => {
                     this.errorMsg = null;
                 }, 4000);
@@ -72,7 +76,10 @@ export default {
             } else {
                 // console.log("Dodaje osobe pod takie id clienta: " + this.clientId);
                 console.log(this.newClient);
-                // window.api.addPerson({...this.newPerson, client_id: this.clientId});
+                if(this.newClient.fb == '') this.newClient.fb = 'www.facebook.com';
+                if(this.newClient.www == '') this.newClient.www = 'www.google.com';
+
+                window.api.addClient({...this.newClient});
                 this.$emit('closeForm');
             }
         }

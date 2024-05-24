@@ -85,9 +85,19 @@ export default {
     //   //   console.log(err);
     //   // });
     // },
+    getClients(){
+      window.api
+        .getClients()
+        .then((names) => {
+          this.allClients = names;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     toggleAddForm() {
       this.showAddForm = !this.showAddForm;
-      // this.getPersons();
+      this.getClients();
     },
     changeCommercialState() {
       this.currentCommercialState = (this.currentCommercialState + 1) % 3;
@@ -134,14 +144,7 @@ export default {
     },
   },
   mounted() {
-    window.api
-      .getClients()
-      .then((names) => {
-        this.allClients = names;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.getClients();
   },
 };
 </script>
