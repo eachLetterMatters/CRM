@@ -63,8 +63,8 @@ export default {
       allClients: [],
       showAddForm: false,
       searchValue: "",
-      currentCommercialState: 1,
-      currentActiveState: 1,
+      currentCommercialState: 2,
+      currentActiveState: 2,
     };
   },
   components: {

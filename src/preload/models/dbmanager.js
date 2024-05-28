@@ -163,7 +163,7 @@ export const dbAddNote = (new_note) => {
     });
 }
 
-export const dbGetNotes = (clientId) => {
+export const dbGetNotes = () => {
   return new Promise((resolve, reject) => {
     knex('quicknotes')
     .select('*') 
@@ -179,6 +179,49 @@ export const dbGetNotes = (clientId) => {
 
 export const dbRemoveNote = (id) => {
   knex('quicknotes')
+    .where({ id: id })
+    .del()
+    .then(() => {
+      console.log('Item deleted successfully');
+    })
+    .catch(error => {
+      console.error('Error deleting item:', error);
+    });
+}
+
+//
+// ============ ACTIONS OPERATIONS ================
+//
+
+export const dbAddAction = (newAction) => {
+  // Insert new item into the database
+  knex('actions')
+    .insert(newAction)
+    .then(() => {
+      console.log('New item inserted successfully');
+    })
+    .catch(error => {
+      console.error('Error inserting new item:', error);
+    });
+}
+
+export const dbGetActions = (clientId) => {
+  return new Promise((resolve, reject) => {
+    knex('actions')
+    .select('*')
+    .where("client_id", clientId)    
+    .then(rows => {
+        // console.log(rows);
+        resolve(rows);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+export const dbRemoveAction = (id) => {
+  knex('actions')
     .where({ id: id })
     .del()
     .then(() => {

@@ -96,7 +96,7 @@
         <Chart type="line" :data="chartData" :options="chartOptions" style="width:100%; height:100%" />
       </div>
       <div style="display: flex; height:50%; width:100%; justify-content:center; align-items: center;">
-        Miejsce na akcje
+        <ActionList :clientId="client.id"/>
       </div>
     </div>
   </div>
@@ -109,12 +109,14 @@ import { store } from "../../..//store/store";
 // const { shell } = require('electron')
 import InputSwitch from 'primevue/inputswitch';
 import Chart from 'primevue/chart';
+import ActionList from './ActionList.vue';
 
 export default {
   components: {
     PersonList,
     InputSwitch,
     Chart,
+    ActionList,
   },
   data() {
     return {
@@ -289,14 +291,6 @@ export default {
   font-size: 48px;
 }
 
-/* .klient {
-  background: red;
-  height: 100%;
-  display: flex;
-  background: var(--dark-white);
-  align-items: center;
-  justify-content: center;
-} */
 .icon {
   filter: invert(17%) sepia(32%) saturate(3234%) hue-rotate(176deg)
     brightness(94%) contrast(96%);
