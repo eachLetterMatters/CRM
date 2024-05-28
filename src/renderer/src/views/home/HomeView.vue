@@ -1,32 +1,44 @@
 <template>
   <div class="view-container">
-      <div class="left">Miejsce na akcje do wykonania</div>
-      <div class="right">Miejsce na szybkie notatki
-          <div v-for="(note, index) in notes" :key="index" class="note" @click="deleteNote(note.id)">
-            {{ note.content }}
-          </div>
-        <button class="add-button" @click="addNote">Dodaj</button>
+    <div class="left">
+      Akcje do wykonania
+      <div v-for="(action, index) in actions" :key="index" class="action" @click="openClientDetails(action.client_id)">
+        <p>{{ action.date }} {{ action.category }}</p>
+        <p>{{ action.comment }}</p>
       </div>
+    </div>
+    <div class="right">
+      Szybkie notatki
+      <div
+        v-for="(note, index) in notes"
+        :key="index"
+        class="note"
+        @click="deleteNote(note.id)"
+      >
+        {{ note.content }}
+      </div>
+      <button class="add-button" @click="addNote">Dodaj</button>
+    </div>
   </div>
 </template>
 
 <script>
+import dayjs from 'dayjs'
+import customParseFOrmat from 'dayjs/plugin/customParseFormat'
+
 export default {
   data() {
     return {
-      message: "Hello, Home!",
-      notes:[],
+      notes: [],
+      actions: [],
     };
   },
   methods: {
-    changeMessage() {
-      this.message = "Hello, World!";
-    },
-    addNote(){
+    addNote() {
       window.api.addNote();
       this.getNotes();
     },
-    getNotes(){
+    getNotes() {
       window.api
         .getNotes()
         .then((notes) => {
@@ -36,27 +48,53 @@ export default {
           console.log(err);
         });
     },
-    deleteNote(id){
+    getAllActions() {
+      window.api
+        .getAllActions()
+        .then((actions) => {
+          this.actions = actions;
+          dayjs.extend(customParseFOrmat);
+          for (let i = 0; i < this.actions.length; i++) {
+            const newFormat = dayjs(
+              this.actions[i].date,
+              "YYYY-MM-DD-HH-mm"
+            ).format("DD.MM.YYYY HH:mm");
+            this.actions[i].date = newFormat;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    deleteNote(id) {
       window.api.removeNote(id);
       this.getNotes();
-    }
+    },
+    openClientDetails(clientId) {
+      this.$router.push({
+        name: "clientdetails",
+        params: { id: clientId },
+      });
+    },
   },
-  mounted(){
+  mounted() {
     this.getNotes();
-  }
+    this.getAllActions();
+  },
 };
 </script>
 
 <style scoped>
 .left {
   display: flex;
+  flex-direction: column;
   /* background: blue; */
   height: calc(100% - 32px);
   /* width: 50% - 24px; */
   width: calc(76% - 24px);
   align-items: center;
-  justify-content: center;
-
+  justify-content: flex-start;
+  padding-top: 2%;
   border: 3px solid var(--dark-white);
   background: #ffffff44;
   /* background: red; */
@@ -86,21 +124,32 @@ export default {
   padding-top: 35px;
 }
 
-.note{
+.note {
   border: 2px solid #ffffff11;
   margin: 5px 10px 5px 10px;
   padding: 3px;
   text-align: center;
 }
 
-.note:hover{
+.note:hover {
   background: #ffffff77;
 }
 
-.add-button{
+.add-button {
   background: var(--dark-blue);
   border: transparent;
   padding: 5px 15px;
   border-radius: 35px;
+}
+
+.action {
+  background: linear-gradient(to right,#cfe3ef, var(--dark-white));
+  border: 3px solid var(--dark-white);
+  border-radius: 35px;
+  width: 96%;
+  margin: 1% 2%;
+  padding-left: 20px;
+  position: relative;
+  height: 50px;
 }
 </style>

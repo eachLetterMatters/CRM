@@ -220,6 +220,20 @@ export const dbGetActions = (clientId) => {
   });
 }
 
+export const dbGetAllActions = () => {
+  return new Promise((resolve, reject) => {
+    knex('actions')
+    .select('*') 
+    .then(rows => {
+        // console.log(rows);
+        resolve(rows);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
 export const dbRemoveAction = (id) => {
   knex('actions')
     .where({ id: id })

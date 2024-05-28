@@ -4,7 +4,7 @@ import { electronAPI } from '@electron-toolkit/preload'
 import {dbAddClient, dbUpdateClient, dbRemoveClient, dbGetClient, dbGetClients, 
   dbAddPerson, dbGetPersons, dbRemovePerson,
   dbGetNotes, dbAddNote, dbRemoveNote,
-  dbGetActions,dbAddAction, dbRemoveAction,
+  dbGetActions,dbAddAction, dbRemoveAction, dbGetAllActions,
 
 } from "./models/dbmanager";
 
@@ -29,6 +29,7 @@ const api = {
   getActions: dbGetActions,
   addAction: dbAddAction,
   removeAction: dbRemoveAction,
+  getAllActions: dbGetAllActions,
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
