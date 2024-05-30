@@ -13,16 +13,22 @@
             {{ client.phone_number }}
           </p>
         </div>
-        <div style="display: flex">
+        <div style="display: flex" v-if="client.www !== null || edit === true">
           <img class="icon" src="../../../assets/icons/ic--www.svg" />
           <p :contenteditable="edit" id="client_www">
             {{ client.www }}
           </p>
         </div>
-        <div style="display: flex">
+        <div style="display: flex" v-if="client.fb !== null || edit === true">
           <img class="icon" src="../../../assets/icons/ic--facebook.svg" />
           <p :contenteditable="edit" id="client_fb">
             {{ client.fb }}
+          </p>
+        </div>
+        <div style="display: flex" v-if="client.address !== null || edit === true">
+          <img class="icon" src="../../../assets/icons/ic--address.svg" />
+          <p :contenteditable="edit" id="client_address">
+            {{ client.address }}
           </p>
         </div>
 
@@ -40,7 +46,7 @@
           </div>
         </div>
 
-        <div style="display:flex; align-items:center;">
+        <div style="display:flex; align-items:center;" v-if="edit">
           <div v-if="edit" style="display:flex; margin-right: 10px;">
             <InputSwitch v-model="client.is_commercial"/>
           </div>
@@ -168,16 +174,31 @@ export default {
     //     window.api.openInBrowser(link);
     //     // shell.openExternal('https://' + link);
     // },
+    getClientData(){
+      window.api
+        .getClient(this.$route.params.id)
+        .then((client) => {
+          // console.log(client);
+          this.client = client;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     toggleEdit() {
       this.edit = !this.edit;
     },
     updateClient() {
-      const name = document.getElementById("client_name").innerText;
-      const phone_number = document.getElementById(
-        "client_phone_number"
-      ).innerText;
-      const www = document.getElementById("client_www").innerText;
-      const fb = document.getElementById("client_fb").innerText;
+      let name = document.getElementById("client_name").innerText;
+      if (name.trim().length === 0) name = null;
+      let phone_number = document.getElementById("client_phone_number").innerText;
+      if (phone_number.trim().length === 0) phone_number = null;
+      let www = document.getElementById("client_www").innerText;
+      if (www.trim().length === 0) www = null;
+      let fb = document.getElementById("client_fb").innerText;
+      if (fb.trim().length === 0) fb = null;
+      let address = document.getElementById("client_address").innerText;
+      if (address.trim().length === 0) address = null;
       // console.log(name + " " + phone_number + " " + www + " " + fb);
       // console.log(this.client)
       const updated_client = {
@@ -185,11 +206,13 @@ export default {
         phone_number: phone_number,
         www: www,
         fb: fb,
+        address: address,
         is_active: this.client.is_active,
         is_commercial: this.client.is_commercial
       };
       window.api.updateClient(this.client.id, updated_client);
       this.edit = false;
+      this.getClientData();
     },
 
     removeClient(id) {
@@ -217,15 +240,7 @@ export default {
   },
   mounted() {
     // console.log(this.$route.params.id);
-    window.api
-      .getClient(this.$route.params.id)
-      .then((client) => {
-        // console.log(client);
-        this.client = client;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.getClientData();
   },
 };
 </script>
@@ -378,6 +393,12 @@ export default {
   border-color: #28a745 !important; 
   color: white !important; 
 } */
+
+.top p {
+  /* background: red; */
+  min-width: 100px;
+}
+
 </style>
 
 <style module>

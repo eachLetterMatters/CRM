@@ -165,8 +165,8 @@ export default {
 .floating-container {
   /* background: yellow; */
   position: fixed;
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   bottom: 0;
   right: 0;
   margin: 25px 25px;

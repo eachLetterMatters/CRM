@@ -5,9 +5,9 @@ const knex = require('knex')({
   client: 'sqlite3',
   connection: {
     // TO JEST SCIEZKA DO BAZY DANYCH NA DEVELOPMENT
-    filename: path.join(__dirname, '../../database/mysqlite.db'),
+    filename: path.join(__dirname, '../../database/odkryjpomorze.db'),
     // A TO SCIEZKA DO BAZ DANYCH NA PRODUKCJI XDDDDDD!!!!
-    // filename: path.join(__dirname, '../../../database/mysqlite.db'),
+    // filename: path.join(__dirname, '../../../database/odkryjpomorze.db'),
   },
 });
 

@@ -7,19 +7,22 @@
             </div>
 
             <div>
-            <input class="text-input" type="text" name="name" placeholder="nazwa" v-model="newClient.name">
+                <input class="text-input" type="text" name="name" placeholder="nazwa" v-model="newClient.name">
             </div>
             <div>
-            <input class="text-input" type="text" name="phone_number" placeholder="numer telefonu" v-model="newClient.phone_number">
+                <input class="text-input" type="text" name="phone_number" placeholder="numer telefonu" v-model="newClient.phone_number">
             </div>
             <div>
-            <input class="text-input" type="text" name="www" placeholder="www" v-model="newClient.www">
+                <input class="text-input" type="text" name="www" placeholder="www" v-model="newClient.www">
             </div>
             <div>
                 <input class="text-input" type="text" name="fb" placeholder="fb" v-model="newClient.fb">
             </div>
             <div>
                 <input class="text-input" type="text" name="description" placeholder="opis" v-model="newClient.description">
+            </div>
+            <div>
+                <input class="text-input" type="text" name="description" placeholder="adres" v-model="newClient.address">
             </div>
             <div style="display:flex; align-items:center; justify-content:center;">
                 <label for="isActive" style="margin-right: 10px;">czy aktywny?</label>
@@ -49,11 +52,12 @@ export default {
             newClient: {
                 name: null,
                 phone_number: null,
-                www: '',
-                fb: '',
+                www: null,
+                fb: null,
                 is_active: true,
                 is_commercial: true,
-                description: '',
+                description: null,
+                address: null,
             },
         }
     },
@@ -76,8 +80,9 @@ export default {
             } else {
                 // console.log("Dodaje osobe pod takie id clienta: " + this.clientId);
                 console.log(this.newClient);
-                if(this.newClient.fb == '') this.newClient.fb = 'www.facebook.com';
-                if(this.newClient.www == '') this.newClient.www = 'www.google.com';
+                // if(this.newClient.fb == '') this.newClient.fb = 'www.facebook.com';
+                // if(this.newClient.www == '') this.newClient.www = 'www.google.com';
+                // if(this.newClient.address == '') this.newClient.address = 'test adres 12';
 
                 window.api.addClient({...this.newClient});
                 this.$emit('closeForm');
@@ -103,7 +108,7 @@ export default {
 
 .form {
     width: 350px;
-    height: 450px;
+    height: 550px;
     padding: 20px;
     background: white;
     border-radius:35px;

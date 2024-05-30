@@ -4,6 +4,7 @@ CREATE TABLE clients (
 	phone_number TEXT,
 	www TEXT,
 	fb TEXT,
+	address TEXT,
 	is_active INTEGER DEFAULT (1) NOT NULL,
 	is_commercial INTEGER DEFAULT (1) NOT NULL,
 	description TEXT
@@ -30,5 +31,12 @@ CREATE TABLE actions (
 	date TEXT NOT NULL,
 	comment TEXT,
 	client_id INTEGER,
+	FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
+);
+
+CREATE TABLE ratings (
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	score INTEGER NOT NULL,
+	year INTEGER NOT NULL,
 	FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
 );
