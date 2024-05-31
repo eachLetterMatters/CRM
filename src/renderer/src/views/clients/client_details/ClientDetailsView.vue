@@ -99,7 +99,13 @@
     <!-- HISTORY AND ACTIONS SECTION -->
     <div class="right">
       <div style="display: flex; height:50%; width:100%; border-bottom: 3px solid var(--dark-white);">
+        <AddRatingForm
+          v-if="showAddForm"
+          @closeForm="toggleAddForm"
+          :clientId="client.id"
+        />
         <Chart type="line" :data="chartData" :options="chartOptions" style="width:100%; height:100%" />
+        <button class="actionButton" @click="toggleAddForm">+</button>
       </div>
       <div style="display: flex; height:50%; width:100%; justify-content:center; align-items: center;">
         <ActionList :clientId="client.id" :allowEdit="edit"/>
@@ -116,6 +122,7 @@ import { store } from "../../..//store/store";
 import InputSwitch from 'primevue/inputswitch';
 import Chart from 'primevue/chart';
 import ActionList from './ActionList.vue';
+import AddRatingForm from './AddRatingForm.vue';
 
 export default {
   components: {
@@ -123,11 +130,13 @@ export default {
     InputSwitch,
     Chart,
     ActionList,
+    AddRatingForm
   },
   data() {
     return {
       client: {},
       edit: false,
+      showAddForm: false,
       chartData:{
         labels: ['2008', '2010', '2014', '2019', '2020', '2021', '2022'],
         datasets: [
@@ -236,6 +245,9 @@ export default {
 
       // window.api.removeClient(id);
       // this.$router.push({ name: "clients" });
+    },
+    toggleAddForm(){
+      this.showAddForm = !this.showAddForm;
     },
   },
   mounted() {
