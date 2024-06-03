@@ -104,7 +104,7 @@
           @closeForm="toggleAddForm"
           :clientId="client.id"
         />
-        <Chart type="line" :data="chartData" :options="chartOptions" style="width:100%; height:100%" />
+        <Chart type="line" :data="chartData" :options="chartOptions" style="width:100%; height:100%" @elementClick="onElementClick"/>
         <button class="actionButton" @click="toggleAddForm">+</button>
       </div>
       <div style="display: flex; height:50%; width:100%; justify-content:center; align-items: center;">
@@ -156,6 +156,7 @@ export default {
             precision: 0
           }
         },
+        responsive: true,
         plugins: {
             legend: {
                 display: false // Disable the legend
@@ -172,7 +173,11 @@ export default {
                     top: 10,
                     bottom: 10
                 }
-            }
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: true,
+            },
         }
       }
 
@@ -248,6 +253,29 @@ export default {
     },
     toggleAddForm(){
       this.showAddForm = !this.showAddForm;
+    },
+    // event handler enabling to delete chart points
+    onElementClick(event) {
+      const chart = event.chart;
+      const element = chart.getElementsAtEventForMode(
+        event.native,
+        'nearest',
+        { intersect: true },
+        true
+      );
+
+      if (element.length) {
+        const datasetIndex = element[0].datasetIndex;
+        const dataIndex = element[0].index;
+
+        console.log("Deleting chart")
+        // Remove the clicked data point
+        this.chartData.datasets[datasetIndex].data.splice(dataIndex, 1);
+        this.chartData.labels.splice(dataIndex, 1);
+
+        // Update the chart
+        chart.update();
+      }
     },
   },
   mounted() {

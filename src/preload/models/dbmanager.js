@@ -5,9 +5,9 @@ const knex = require('knex')({
   client: 'sqlite3',
   connection: {
     // TO JEST SCIEZKA DO BAZY DANYCH NA DEVELOPMENT
-    filename: path.join(__dirname, '../../database/odkryjpomorze.db'),
+    // filename: path.join(__dirname, '../../database/odkryjpomorze.db'),
     // A TO SCIEZKA DO BAZ DANYCH NA PRODUKCJI XDDDDDD!!!!
-    // filename: path.join(__dirname, '../../../database/odkryjpomorze.db'),
+    filename: path.join(__dirname, '../../../database/odkryjpomorze.db'),
   },
 });
 
@@ -154,7 +154,7 @@ const testQuickNote = {
 export const dbAddNote = (new_note) => {
   // Insert new item into the database
   knex('quicknotes')
-    .insert(testQuickNote)
+    .insert(new_note)
     .then(() => {
       console.log('New item inserted successfully');
     })

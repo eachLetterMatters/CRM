@@ -1,4 +1,8 @@
 <template>
+  <AddQuicknoteForm
+    v-if="showAddForm"
+    @closeForm="toggleAddForm"
+  />
   <div class="view-container">
     <div class="left">
       Akcje do wykonania
@@ -17,7 +21,7 @@
       >
         {{ note.content }}
       </div>
-      <button class="add-button" @click="addNote">Dodaj</button>
+      <button class="add-button" @click="toggleAddForm">Dodaj</button>
     </div>
   </div>
 </template>
@@ -25,19 +29,20 @@
 <script>
 import dayjs from 'dayjs'
 import customParseFOrmat from 'dayjs/plugin/customParseFormat'
+import AddQuicknoteForm from './AddQuicknoteForm.vue';
 
 export default {
   data() {
     return {
       notes: [],
       actions: [],
+      showAddForm: false,
     };
   },
+  components:{
+    AddQuicknoteForm
+  },
   methods: {
-    addNote() {
-      window.api.addNote();
-      this.getNotes();
-    },
     getNotes() {
       window.api
         .getNotes()
@@ -65,6 +70,10 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    toggleAddForm(){
+      this.showAddForm = !this.showAddForm;
+      this.getNotes();
     },
     deleteNote(id) {
       window.api.removeNote(id);
