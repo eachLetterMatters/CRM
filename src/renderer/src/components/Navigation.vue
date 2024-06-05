@@ -114,6 +114,7 @@ nav {
 
 .link:hover {
   background-color: var(--dark-mint);
+  transition: 1s;
 }
 
 li a.router-link-exact-active {

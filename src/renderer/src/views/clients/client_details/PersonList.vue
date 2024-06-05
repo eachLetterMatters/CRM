@@ -14,17 +14,21 @@
           src="../../../assets/icons/ic--person.svg"
           style="height: 30px"
         />
+
         <p>{{ person.name }}</p>
         <p>{{ person.surname }}</p>
 
-        <div style="display: flex">
-          <img class="icon" src="../../../assets/icons/ic--phone.svg" />
-          <p>{{ person.phone_number }}</p>
-        </div>
+        <div style="display:flex; flex-direction:column; margin-top: 15px;">
+          <div style="display: flex">
+            <img class="icon" src="../../../assets/icons/ic--phone.svg" style="margin-right:10px;"/>
+            <p>{{ person.phone_number }}</p>
+          </div>
 
-        <div style="display: flex">
-          <img class="icon" src="../../../assets/icons/ic--email.svg" />
-          <p>{{ person.email }}</p>
+          <div style="display: flex">
+            <img class="icon" src="../../../assets/icons/ic--email.svg" style="margin-right:10px;"/>
+            <p>{{ person.email }}</p>
+          </div>
+
         </div>
 
         <!-- DELETE BUTTON -->
@@ -41,7 +45,7 @@
         </div>
       </div>
       <!-- ADD A NEW PERSON BUTTON -->
-      <div class="person" @click="toggleAddForm">
+      <div class="person" @click="toggleAddForm" style="justify-content: center;">
         <div class="add-button">+</div>
       </div>
     </div>
@@ -149,7 +153,7 @@ export default {
   /* height: 200px; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   border: 3px solid white;
   /* background: transparent; */
@@ -160,6 +164,17 @@ export default {
   border-radius: 35px;
   color: var(--dark-background-1);
   position: relative;
+  overflow: hidden;
+  padding: 10px;
+  padding-top: 35px;
+}
+
+.person p {
+  margin: 0;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 .gallery::-webkit-scrollbar {
@@ -184,8 +199,9 @@ export default {
   z-index: 99;
   cursor: pointer;
 }
+
 .add-button:hover {
-  background: var(--theme-color);
+  background: var(--dark-blue);
   transition: 1s;
 }
 
@@ -194,7 +210,7 @@ export default {
   /* background: var(--light-red); */
   border-radius: 50%;
   /* z-index: 100; */
-  top: 15px;
+  bottom: 0px;
   right: 50% - 20px;
   height: 40px;
   width: 40px;

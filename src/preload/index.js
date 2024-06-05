@@ -1,10 +1,12 @@
 import { contextBridge, shell } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-import {dbAddClient, dbUpdateClient, dbRemoveClient, dbGetClient, dbGetClients, 
-  dbAddPerson, dbGetPersons, dbRemovePerson,
+import {
   dbGetNotes, dbAddNote, dbRemoveNote,
-  dbGetActions,dbAddAction, dbRemoveAction, dbGetAllActions,
+  dbGetClient, dbGetClients, dbAddClient, dbUpdateClient, dbRemoveClient,
+  dbGetPersons, dbAddPerson, dbRemovePerson,
+  dbGetActions, dbAddAction, dbRemoveAction, dbGetAllActions,
+  dbGetRatings, dbAddRating, dbRemoveRating,
 
 } from "./models/dbmanager";
 
@@ -14,22 +16,25 @@ const openInBrowser = (link) => {
 
 // Custom APIs for renderer
 const api = {
-  addClient: dbAddClient,
-  removeClient: dbRemoveClient,
   openInBrowser: openInBrowser,
-  getClient: dbGetClient,
-  getClients: dbGetClients,
-  addPerson: dbAddPerson,
-  getPersons: dbGetPersons,
-  removePerson: dbRemovePerson,
-  updateClient: dbUpdateClient,
   getNotes: dbGetNotes,
   addNote: dbAddNote,
   removeNote: dbRemoveNote,
+  getClient: dbGetClient,
+  getClients: dbGetClients,
+  addClient: dbAddClient,
+  updateClient: dbUpdateClient,
+  removeClient: dbRemoveClient,
+  getPersons: dbGetPersons,
+  addPerson: dbAddPerson,
+  removePerson: dbRemovePerson,
   getActions: dbGetActions,
   addAction: dbAddAction,
-  removeAction: dbRemoveAction,
   getAllActions: dbGetAllActions,
+  removeAction: dbRemoveAction,
+  getRatings: dbGetRatings,
+  addRating: dbAddRating,
+  removeRating: dbRemoveRating,
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

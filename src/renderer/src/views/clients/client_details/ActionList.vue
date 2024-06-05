@@ -14,13 +14,18 @@
                 <h1 style="font-size:20px; color: grey;">Akcje</h1>
             </div>
             <div style="flex:1; display:flex; align-items:center; justify-content:flex-end;">
-                <button class="actionButton" @click="toggleAddForm">+</button>
+                <button class="add-action-button" @click="toggleAddForm">+</button>
             </div>
         </div>
         <!-- ACTION LIST -->
         <div v-for="(action, index) in actions" :key="index" class="action">
-            <p>{{action.date}}  {{ action.category }}</P>
-            <p>{{action.comment}}</p>
+            <div style="flex:3; background: var(--dark-white); margin-right:20px; border-radius: 35px; display: flex; justify-content:center; align-items: center;">
+            <p>{{ action.date }}</p>
+            </div>
+            <div style="flex:8;">
+            <p>{{ action.category }}</p>
+            <p>{{ action.comment }}</p>
+            </div>
             <div
                 class="trash-button"
                 v-if="allowEdit"
@@ -113,28 +118,41 @@ export default {
     justify-content: space-around;
     /* align-items: space-around; */
 }
-.actionButton{
+.add-action-button{
   /* background: var(--dark-blue); */
-  background: #cfe3ef;
+  background: transparent;
   border: transparent;
   width: 40px;
   height: 40px;
   color: white;
   border-radius: 35px;
-  margin-right: 20px;
+  margin-right: 5px;
+  border: 3px solid #f4f4f4;
+}
+.add-action-button:hover{
+  /* background: var(--dark-blue); */
+  background: var(--dark-blue);
+  transition: 0.5s;
+    /* transform: translatey(3px); */
 }
 .action{
     /* background-color: #ffffff33; */
-    background: linear-gradient(to right,#cfe3ef, white);
+    /* background: linear-gradient(to right,#cfe3ef, white); */
+    background: transparent;
     border: 3px solid var(--dark-white);
     /* background: transparent; */
     border-radius: 35px;
     width: 96%;
     margin: 2% 2%;
-    padding-left: 20px;
     position: relative;
     height: 50px;
+    display: flex;
 }
+
+/* .action:hover {
+  background: #ffffff77;
+} */
+
 .trash-button {
   position: absolute;
   /* background: var(--light-red); */

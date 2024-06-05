@@ -1,6 +1,6 @@
 <template>
     <div class="backdrop" @click.self="closeForm">
-        <form class="form" @submit.prevent="addAction" method="post">
+        <form class="form" @submit.prevent="addRating" method="post">
 
             <div style="height: 48px;">
                 <h1 style="font-size: 20px;">Dodaj ocenę współpracy</h1>
@@ -43,16 +43,26 @@ export default {
         closeForm() {
             this.$emit('closeForm');
         },
-        addAction(){
+        addRating(){
             if(this.newRating.score == null || this.newRating.year == null){
                 this.errorMsg = "Wypełnij wymagane pola";
                 setTimeout(() => {
                     this.errorMsg = null;
                 }, 4000);             
+            } else if (this.newRating.score > 6 || this.newRating.score < 1){
+                this.errorMsg = "Ocena powinna mieć wartość między 1 a 6";
+                setTimeout(() => {
+                    this.errorMsg = null;
+                }, 4000);  
+            } else if (this.newRating.year > 2050 || this.newRating.year < 2000){
+                this.errorMsg = "Rok powinien być z przedziału (2000, 2050)";
+                setTimeout(() => {
+                    this.errorMsg = null;
+                }, 4000);  
             } else {
-                console.log(this.newRating)
+                // console.log(this.newRating)
                 // TODO: empty string handling
-                // window.api.addAction({...this.newAction, client_id: this.clientId})
+                window.api.addRating({...this.newRating, client_id: this.clientId})
                 this.$emit('closeForm');
             }
         }

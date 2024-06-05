@@ -8,7 +8,7 @@
           class="text-input"
           type="text"
           v-model="searchValue"
-          placeholder="Search title.."
+          placeholder="Szukaj..."
         />
 
         <!-- ?is_active ?is_commercial ?ocena -->
@@ -75,16 +75,6 @@ export default {
     changeMessage() {
       this.message = "Hello, World!";
     },
-    // addClient(){
-    //   // window.api.addClient();
-    //   // window.api.getNames()
-    //   // .then((names) => {
-    //   //   this.allClients = names;
-    //   // })
-    //   // .catch((err) => {
-    //   //   console.log(err);
-    //   // });
-    // },
     getClients(){
       window.api
         .getClients()
@@ -165,8 +155,8 @@ export default {
 .floating-container {
   /* background: yellow; */
   position: fixed;
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
   bottom: 0;
   right: 0;
   margin: 25px 25px;
@@ -180,8 +170,8 @@ export default {
 
 .floating-add {
   position: absolute;
-  width: 65px;
-  height: 65px;
+  width: 60px;
+  height: 60px;
   background: var(--dark-blue);
   bottom: 0;
   border-radius: 50%;
@@ -254,7 +244,6 @@ export default {
 .icon-dark {
   height: 20px;
   /* https://isotropic.co/tool/hex-color-to-css-filter/ */
-  filter: invert(55%) sepia(32%) saturate(3822%) hue-rotate(166deg)
-    brightness(95%) contrast(92%);
+  filter: invert(43%) sepia(52%) saturate(7494%) hue-rotate(200deg) brightness(102%) contrast(109%);
 }
 </style>

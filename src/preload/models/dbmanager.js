@@ -5,9 +5,9 @@ const knex = require('knex')({
   client: 'sqlite3',
   connection: {
     // TO JEST SCIEZKA DO BAZY DANYCH NA DEVELOPMENT
-    // filename: path.join(__dirname, '../../database/odkryjpomorze.db'),
+    filename: path.join(__dirname, '../../database/odkryjpomorze.db'),
     // A TO SCIEZKA DO BAZ DANYCH NA PRODUKCJI XDDDDDD!!!!
-    filename: path.join(__dirname, '../../../database/odkryjpomorze.db'),
+    // filename: path.join(__dirname, '../../../database/odkryjpomorze.db'),
   },
 });
 
@@ -236,6 +236,50 @@ export const dbGetAllActions = () => {
 
 export const dbRemoveAction = (id) => {
   knex('actions')
+    .where({ id: id })
+    .del()
+    .then(() => {
+      console.log('Item deleted successfully');
+    })
+    .catch(error => {
+      console.error('Error deleting item:', error);
+    });
+}
+
+//
+// ============ RATINGS OPERATIONS ================
+//
+
+export const dbAddRating = (newRating) => {
+  // Insert new item into the database
+  knex('ratings')
+    .insert(newRating)
+    .then(() => {
+      console.log('New item inserted successfully');
+    })
+    .catch(error => {
+      console.error('Error inserting new item:', error);
+    });
+}
+
+export const dbGetRatings = (clientId) => {
+  return new Promise((resolve, reject) => {
+    knex('ratings')
+    .select('*')
+    .where("client_id", clientId)
+    .orderBy('year', 'asc')
+    .then(rows => {
+        // console.log(rows);
+        resolve(rows);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+export const dbRemoveRating = (id) => {
+  knex('ratings')
     .where({ id: id })
     .del()
     .then(() => {

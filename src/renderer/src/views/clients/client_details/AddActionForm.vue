@@ -2,25 +2,27 @@
     <div class="backdrop" @click.self="closeForm">
         <form class="form" @submit.prevent="addAction" method="post">
 
-            <div style="height: 48px;">
-                <h1 style="font-size: 20px;">Dodaj nową akcję</h1>
-            </div>
-            <div>
-                <input class="text-input" type="text" name="type" placeholder="typ akcji" v-model="newAction.category">
+            <div style="height: 350px; padding:20px; display:flex; align-items:center; flex-direction:column; justify-content: space-between;">
+                <div style="height: 48px;">
+                    <h1 style="font-size: 20px;">Dodaj nową akcję</h1>
+                </div>
+                <div>
+                    <input class="text-input" type="text" name="type" placeholder="typ akcji" v-model="newAction.category">
+                </div>
+                <div>
+                    <input class="text-input" type="text" name="comment" placeholder="komentarz" v-model="newAction.comment">
+                </div>
+
+                <div>
+                    <input class="button" type="submit" :value="'Dodaj'" />
+                </div>
+                <div v-if="errorMsg">
+                    <p style="color:red; padding:10px">{{ errorMsg }}</p>
+                </div>            
             </div>
             <div>
                 <Calendar v-model="newAction.date" showTime hourFormat="24" inline/>
             </div>
-            <div>
-                <input class="text-input" type="text" name="comment" placeholder="komentarz" v-model="newAction.comment">
-            </div>
-
-            <div>
-            <input class="button" type="submit" :value="'Dodaj'" />
-            </div>
-            <div v-if="errorMsg">
-                <p style="color:red; padding:10px">{{ errorMsg }}</p>
-            </div>            
         </form>
     </div>
 </template>
@@ -96,15 +98,15 @@ export default {
 }
 
 .form {
-    width: 350px;
-    height: 550px;
+    /* width: 350px;
+    height: 550px; */
     padding: 20px;
     background: white;
     border-radius:35px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    flex-direction: column;
+    /* flex-direction: column; */
     border-color: var(--theme-color);
     border-style: solid;
     box-shadow:

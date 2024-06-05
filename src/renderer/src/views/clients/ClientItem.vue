@@ -1,5 +1,5 @@
 <template>
-  <li :class="{ 'client-inactive' : !client.is_active }">
+  <li :class="{ 'client-inactive' : !client.is_active }" @click="openClientDetails()">
     <div class="name-container">
       <div v-if="client.is_commercial" style="display: flex;">
         <img class="icon" src="../../assets/icons/company.svg" />
@@ -28,7 +28,7 @@
       <p>{{ client.phone_number }}</p>
     </div>
 
-    <div class="details-container" @click="openClientDetails()">
+    <div class="details-container">
       <img
         class="icon"
         src="../../assets/icons/iconamoon--arrow-right-2-light.svg"

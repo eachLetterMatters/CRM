@@ -14,7 +14,8 @@
 
   --icon-color: #054061;
   --light-blue: #38bdf8;
-  --dark-blue: #0ea5e9;
+  /* --dark-blue: #0ea5e9; */
+  --dark-blue: #007aff;
   --light-mint: #99f6e3;
   --dark-mint: #5eead5;
 
@@ -28,7 +29,9 @@
   box-sizing: border-box;
   font-family: Poppins;
   font-size: 15px;
-  color: #054061;
+  /* color: #054061; */
+  color: var(--icon-color);
+  /* color: red; */
 }
 
 html,
