@@ -5,16 +5,23 @@
   />
   <div class="view-container">
     <div class="left">
-      <p style="font-size:18px;">Akcje do wykonania</p>
-      <div v-for="(action, index) in actions" :key="index" class="action" @click="openClientDetails(action.client_id)">
-        <div style="flex:1; background: var(--dark-white); margin-right:20px; border-radius: 35px; display: flex; justify-content:center; align-items: center;">
-          <p>{{ action.date }}</p>
+      <div style="display:flex;width:100%;">
+        <div style="flex:1">
+          {{filterOption}}
         </div>
-        <div style="flex:4;">
-          <p>{{ action.category }}</p>
-          <p>{{ action.comment }}</p>
+        <div style="flex:1; display:flex; align-items:center; justify-content: center;">
+          <p style="font-size:18px;">Akcje do wykonania</p>
+        </div>
+        <div style="flex:1">
+          <!-- <SelectButton v-model="filterOption" :options="filterOptions" aria-labelledby="basic" :class="$style.select-button"/> -->
         </div>
       </div>
+        <ActionItem
+          v-for="(action, index) in actions"
+          :key="index"
+          v-bind:action="action"
+          @click="openClientDetails(action.client_id)"
+        />
     </div>
     <div class="right">
       <ConfirmDialog :class="$style.myinput" />
@@ -34,8 +41,10 @@
 
 <script>
 import dayjs from 'dayjs'
-import customParseFOrmat from 'dayjs/plugin/customParseFormat'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import AddQuicknoteForm from './AddQuicknoteForm.vue';
+// import SelectButton from 'primevue/selectbutton';
+import ActionItem from '../../components/ActionItem.vue';
 
 export default {
   data() {
@@ -43,10 +52,14 @@ export default {
       notes: [],
       actions: [],
       showAddForm: false,
+      filterOption: null,
+      filterOptions: ["1 day", "3 day", "7 day"]
     };
   },
   components:{
-    AddQuicknoteForm
+    AddQuicknoteForm,
+    // SelectButton,
+    ActionItem,
   },
   methods: {
     getNotes() {
@@ -60,9 +73,10 @@ export default {
         });
     },
     sortActionsByDate() {
+      dayjs.extend(customParseFormat);
       this.actions.sort((a, b) => {
-        const dateA = dayjs(a.date, "DD.MM.YYYY HH:mm");
-        const dateB = dayjs(b.date, "DD.MM.YYYY HH:mm");
+        const dateA = dayjs(a.date, "YYYY-MM-DD-HH-mm");
+        const dateB = dayjs(b.date, "YYYY-MM-DD-HH-mm");
         if (dateA.isBefore(dateB)) return -1;
         if (dateA.isAfter(dateB)) return 1;
         return 0; // dates are equal
@@ -72,14 +86,14 @@ export default {
       window.api.getAllActions()
         .then((actions) => {
           this.actions = actions;
-          dayjs.extend(customParseFOrmat);
-          for (let i = 0; i < this.actions.length; i++) {
-            const newFormat = dayjs(
-              this.actions[i].date,
-              "YYYY-MM-DD-HH-mm"
-            ).format("DD.MM.YYYY HH:mm");
-            this.actions[i].date = newFormat;
-          }
+          // dayjs.extend(customParseFOrmat);
+          // for (let i = 0; i < this.actions.length; i++) {
+          //   const newFormat = dayjs(
+          //     this.actions[i].date,
+          //     "YYYY-MM-DD-HH-mm"
+          //   ).format("DD.MM.YYYY HH:mm");
+          //   this.actions[i].date = newFormat;
+          // }
           this.sortActionsByDate();
         })
         .catch((err) => {
@@ -138,8 +152,14 @@ export default {
   border-radius: 35px;
   color: var(--dark-background-1);
   margin: 16px 8px 16px 16px;
+  overflow-y:scroll;
   /* margin: 16px 0px 16px 0px; */
 }
+
+.left::-webkit-scrollbar {
+  display: none;
+}
+
 
 .right {
   display: flex;
@@ -189,22 +209,6 @@ export default {
     transform: translatey(-5px);
     transition: 0.5s;
 }
-
-.action {
-  /* background: linear-gradient(to right,#cfe3ef, var(--dark-white)); */
-  background: transparent;
-  border: 3px solid var(--dark-white);
-  border-radius: 35px;
-  width: 96%;
-  margin: 1% 2%;
-  position: relative;
-  height: 50px;
-  display: flex;
-}
-
-.action:hover{
-  background: #ffffff55;
-}
 </style>
 
 <style module>
@@ -220,4 +224,9 @@ export default {
   margin: 10px 5px 10px 5px;
   padding: 5px;
 }
+
+/* .select-button select{
+  padding:10px;
+  background-color: red;
+} */
 </style>

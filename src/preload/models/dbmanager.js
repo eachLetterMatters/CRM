@@ -11,6 +11,8 @@ const knex = require('knex')({
   },
 });
 
+knex.raw('PRAGMA foreign_keys = ON');
+
 //
 // ============ CLIENTS TABLE OPERATIONS ================
 //
@@ -81,6 +83,10 @@ export const dbUpdateClient = (id, data) => {
 }
 
 export const dbRemoveClient = (id) => {
+  // needed for a properly working ON DELETE CASCADE RESTRAINT
+  knex.raw("PRAGMA foreign_keys = ON;").then(() => {
+      console.log("Foreign Key Check activated.");
+  });
   knex('clients')
     .where({ id: id })
     .del()

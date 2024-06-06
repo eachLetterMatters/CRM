@@ -18,14 +18,11 @@
             </div>
         </div>
         <!-- ACTION LIST -->
-        <div v-for="(action, index) in actions" :key="index" class="action">
-            <div style="flex:3; background: var(--dark-white); margin-right:20px; border-radius: 35px; display: flex; justify-content:center; align-items: center;">
-            <p>{{ action.date }}</p>
-            </div>
-            <div style="flex:8;">
-            <p>{{ action.category }}</p>
-            <p>{{ action.comment }}</p>
-            </div>
+        <ActionItem
+          v-for="(action, index) in actions"
+          :key="index"
+          v-bind:action="action"
+        >
             <div
                 class="trash-button"
                 v-if="allowEdit"
@@ -37,7 +34,7 @@
                 style="height: 25px"
             />
             </div>
-        </div>
+        </ActionItem>
     </div>
 </template>
 
@@ -45,10 +42,12 @@
 import AddActionForm from './AddActionForm.vue'
 import dayjs from 'dayjs'
 import customParseFOrmat from 'dayjs/plugin/customParseFormat'
+import ActionItem from '../../../components/ActionItem.vue'
 
 export default {
     components:{
-        AddActionForm
+        AddActionForm,
+        ActionItem,
     },
     props : ["clientId", "allowEdit"],
     data(){
@@ -67,11 +66,6 @@ export default {
         getActions(){
             window.api.getActions(this.clientId).then((actions) => {
                 this.actions = actions;
-                dayjs.extend(customParseFOrmat);
-                for(let i = 0; i < this.actions.length; i++){
-                    const newFormat = dayjs(this.actions[i].date, 'YYYY-MM-DD-HH-mm').format('DD.MM.YYYY HH:mm');
-                    this.actions[i].date = newFormat;
-                }
                 // for(a of this.actions){
                 //     console.log(a.date);
                 // }

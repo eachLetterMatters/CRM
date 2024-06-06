@@ -10,6 +10,7 @@ import 'primevue/resources/primevue.min.css';
 
 const app = createApp(App).use(router);
 app.use(PrimeVue);
+
 // app.use(PrimeVue, { unstyled: true });
 app.use(ConfirmationService);
 
